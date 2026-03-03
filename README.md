@@ -1,6 +1,17 @@
-# AstraLumen – Backend
+# AstraLumen 
 
-Backend Node.js / Express pour AstraLumen, avec architecture **3‑couches + MVC + services**.
+## 💡 À propos d’AstraLumen
+
+AstraLumen est pour l’instant une **API REST backend** structurée comme un **monolithe 3‑couches avec MVC**, prête à gérer articles, utilisateurs, sessions et statistiques.
+
+À terme, le projet deviendra une **application full stack**, avec un front React, comprenant :
+
+* un **journal personnel**
+* un **chrono et un timer**
+* une **météo mood**, où le bouton mood change le design du journal
+* un **dashboard de statistiques** des sessions, timer et chrono
+
+L’architecture actuelle permet de séparer clairement les responsabilités : accès à la BDD, logique métier, gestion des requêtes HTTP et endpoints, ce qui rend l’application **facile à maintenir et à étendre**.
 
 ---
 
@@ -8,22 +19,20 @@ Backend Node.js / Express pour AstraLumen, avec architecture **3‑couches + MVC
 
 ```
 server/
-│
 ├─ src/
-│   ├─ app.ts            <-- point d'entrée (Instance Express server)
-│   ├─ db.ts             <-- connexion MySQL (POOL)
-│   ├─ models/           <-- entités / interfaces TS
-│	    └─ IArticle.ts
-│	    └─ ISession.ts
-│	    └─ IStatMood.ts
-│	    └─ IUser.ts
-│   ├─ repositories/     <-- requêtes SQL (logique CRUD)
-│	    └─ ArticleRepository.ts
-│	    └─ UserRepository.ts
-│   ├─ controllers/      <-- Contrôle et gestion des codes status
-│	    └─ article.controller.ts
-│   └─ route.ts          <-- endpoints Express
-│
+│   ├─ app.ts            # Point d'entrée, instance Express
+│   ├─ db.ts             # Connexion MySQL (pool)
+│   ├─ models/           # Interfaces / entités TS
+│   │    ├─ IArticle.ts
+│   │    ├─ IUser.ts
+│   │    ├─ ISession.ts
+│   │    └─ IStatMood.ts
+│   ├─ repositories/     # Accès BDD / CRUD
+│   │    ├─ ArticleRepository.ts
+│   │    └─ UserRepository.ts
+│   ├─ controllers/      # Gestion des requêtes HTTP et codes status
+│   │    └─ article.controller.ts
+│   └─ route.ts          # Endpoints Express
 ├─ package.json
 ├─ tsconfig.json
 └─ .env
@@ -51,21 +60,22 @@ npm run build     # Compiler TypeScript
 npm start         # Lancer serveur compilé
 ```
 
-Le serveur écoute sur le port défini dans `.env` ou 4001 par défaut.
+Le serveur écoute sur le port défini dans `.env` ou sur 4000 par défaut.
 
 ---
 
 ## 📌 Points clés de l’architecture
 
-* **Models** → structure des données / types TS (`IArticle`, `IUser`, etc.)
-* **Repositories** → CRUD BDD (requêtes SQL / ORM)
-* **Services** → logique métier : pagination, stats, hashage mot de passe, règles spécifiques
+* **Models** → structure des données / types TS (`IArticle`, `IUser`, `ISession`, `IStatMood`)
+* **Repositories** → CRUD et accès direct à la BDD
 * **Controllers** → gestion des requêtes HTTP et codes statut (`200`, `201`, `404`, `500`)
 * **Routes** → endpoints Express (`/articles`, `/users/:id`)
-* **Middlewares** → auth, validation, logging, gestion des erreurs
-* **Utils** → fonctions réutilisables : tokens, formatage, helpers
 
-**Exemple Logging :** enregistre les requêtes utilisateur pour détecter attaques, bugs ou ralentissements (optionnel en dev).
+**À venir :**
+
+* **Services** → logique métier : pagination, stats, hashage mot de passe, règles spécifiques
+* **Middlewares** → auth, validation, logging, gestion des erreurs
+* **Utils** → fonctions réutilisables : génération de token, formatage de dates, helpers
 
 ---
 
@@ -75,18 +85,6 @@ Le serveur écoute sur le port défini dans `.env` ou 4001 par défaut.
 * Pagination des journaux et sessions
 * Calcul des statistiques par session
 * Sécurité : hashage mot de passe, validation des données, authentification JWT
-* Architecture prête pour front React (mono‑repo possible)
+* Prêt pour front React (monorepo possible)
 
 ---
-
-## 🛠️ Notes
-
-* Les **services** sont optionnels si aucune règle métier complexe n’existe encore.
-* Les **middlewares** permettent de centraliser sécurité, validation et gestion des erreurs.
-* Les **utils** contiennent tout ce qui est réutilisable dans le projet, sans dépendance à Express ou BDD.
-
----
-
-Si tu veux, je peux te faire une **version encore plus courte et “readable” pour quelqu’un qui découvre le projet**, style 1‑2 minutes de lecture avec tout ce qu’il faut savoir.
-
-Veux‑tu que je fasse ça ?
