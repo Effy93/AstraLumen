@@ -32,6 +32,8 @@ server/
 │   │    └─ UserRepository.ts
 │   ├─ controllers/      # Gestion des requêtes HTTP et codes status
 │   │    └─ article.controller.ts
+│   │    └─ user.controller.ts
+│   │    └─ auth.controller.ts
 │   └─ route.ts          # Endpoints Express
 ├─ package.json
 ├─ tsconfig.json

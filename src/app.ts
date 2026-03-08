@@ -10,9 +10,9 @@ const PORT = process.env.PORT || 4001;
 
 app.use(express.json());
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 // toutes les routes passent par "/api"
 app.use("/api", router);
