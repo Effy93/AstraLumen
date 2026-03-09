@@ -14,7 +14,9 @@ export default class UserController {
             }
 
             // Verifier si l'utilisateur n'existe pas déjà (via l'email)
-            const [user] = await UserRepository.getUserByEmail(req.body.email) as IUser[]    // recupère l'email
+            const user = await UserRepository.getUserByEmail(req.body.email)  // recupère l'email
+            // console.log(user)
+            
             // Si l'oject a la clé user VIDE alors c'est que l'utilisateur n'existe pas
             if (user && Object.keys(user).length !== 0) {
                 return res.status(401).json({message: "Email déjà utilisé"})
