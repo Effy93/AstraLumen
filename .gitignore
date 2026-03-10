@@ -1,6 +1,24 @@
-# Node modules
-/node_modules
+# Ignore all node_modules
+node_modules/
+client/node_modules/
+server/node_modules/`
+
 
 # Environnement
 .env
 data.sql
+
+
+# Build / dist
+client/build/
+server/dist/
+
+# Fichiers secrets
+server/.env
+client/.env
+
+# Logs
+*.log
+
+# macOS
+.DS_Store

@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 200vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+}
+
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #f3f3f3;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
