@@ -34,6 +34,8 @@ server/
 │   │    └─ article.controller.ts
 │   │    └─ user.controller.ts
 │   │    └─ auth.controller.ts
+│   ├─ middlewares/      # 
+│   │    └─ verifyToken.ts
 │   └─ route.ts          # Endpoints Express
 ├─ package.json
 ├─ tsconfig.json
