@@ -1,62 +1,64 @@
-import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import type { Response, Request } from "express";
-import type IUser from "../models/IUser.ts";
+
+import type { AuthRequest } from "../middlewares/verifyToken.ts";
 import UserRepository from "../repositories/UserRepository.ts";
 
 dotenv.config();
 
-export default class AuthController {
-  static async login(req: Request, res: Response) {
-    try {
-      const { email, password } = req.body;
+const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  try {
+    const { email, password } = req.body;
 
-      // Vérification si les données sont présentes
-      if (!email || !password) {
-        return res.status(400).json({ message: "Identifiants requis" });
-      }
-
-      // Vérifier si l'email existe
-      const userExist = await UserRepository.getUserByEmail(email) as IUser[];
-
-      // Si aucun utilisateur trouvé
-      if (!userExist[0]) {
-        return res.status(401).json({ message: "Identifiants invalides" });
-      }
-
-      // Comparer le mot de passe saisi avec le hash en DB
-      const comparedPassword = await bcrypt.compare(
-        password,                         
-        userExist[0] ? userExist[0].password : "null" 
-      );
-
-      if (!comparedPassword) {
-        return res.status(401).json({ message: "Identifiants invalides" });
-      }
-
-      // Création du token JWT
-      const token = jwt.sign(
-        {
-          user_id: userExist[0] ? userExist[0].id : null,
-          user_email: userExist[0] ? userExist[0].email : null,
-          role: "user"
-        },
-        process.env.SECRET_KEY || "secretKey",
-        { expiresIn: "8h" }
-      );
-
-      // Stockage du token dans les cookies
-      res.cookie("access_token", token, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 8 * 3600000),
-      });
-
-      return res.status(200).json({ message: "Connexion réussie" });
-
-    } catch (error) {
-      console.log("Erreur login :>>", error);
-      return res.status(500).json({ message: "Erreur serveur" });
+    if (!email || !password) {
+      res.status(400).json({ message: "Identifiants requis" });
+      return;
     }
+
+    const users = await UserRepository.getUserByEmail(email);
+    const user = users[0];
+
+    if (!user) {
+      res.status(401).json({ message: "Identifiants non valides" });
+      return;
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+
+    if (!isValidPassword) {
+      res.status(401).json({ message: "Identifiants non valides" });
+      return;
+    }
+
+    // Token = carte d'identité
+    const token = jwt.sign(
+      { user_id: user.id, user_email: user.email, role: "user" },
+      process.env.SECRET_KEY || "defaultsecret123!",
+      { expiresIn: "8h" },
+    );
+
+    // cookie = stockage des infos du token
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 8 * 3600000), // 8h
+    });
+    res.status(200).json({ message: "Connexion réussie" });
+  } catch (err) {
+    console.error(err);
+    next(err);
   }
-}
+};
+const me = (req: AuthRequest, res: Response) => {
+  res.status(200).json(req.user);
+};
+
+
+const authController = { login, me };
+
+export default authController;

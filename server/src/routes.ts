@@ -3,6 +3,7 @@ import { Router } from "express";
 import ArticleController from "./controllers/article.controller.ts";
 import UserController  from "./controllers/user.controller.ts";
 import AuthController from "./controllers/auth.controller.ts";
+import { verifyToken } from "./middlewares/verifyToken.ts";
 
 const router = Router();
 
@@ -18,6 +19,20 @@ router.delete("/articles/:id", ArticleController.remove);
 // USER
 router.get("/users", UserController.browse);
 router.post("/users", UserController.create);
-router.post("/login", AuthController.login);
 
+// LOGIN // PROFILE // LOGOUT
+router.post("/login", AuthController.login);
+router.get("/me", verifyToken, AuthController.me);
+// router.post("/logout", AuthController.logout);
+
+
+// LOGOUT
+// router.post("/logout", (req, res) => {
+//   res.clearCookie("access_token", {
+//     httpOnly: true,
+//     secure: process.env.NODE_ENV === "production", // si HTTPS
+//     sameSite: "lax",
+//   });
+//   res.status(200).json({ message: "Déconnexion réussie" });
+// });
 export default router;

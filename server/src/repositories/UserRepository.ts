@@ -24,16 +24,16 @@ export default class UserRepository {
             
         }
     }
-    static async getUserByEmail(email: string) {
-        try {
-            const [rows] = await db.query<RowDataPacket[]>("SELECT * FROM user WHERE email=?",
-                [email]
-            );
-            return rows
-        }
-        catch(error) {
-            return error
-
-        }
+    static async getUserByEmail(email: string): Promise<IUser[]> { // <-- retourne IUser[]
+    try {
+        const [rows] = await db.query<RowDataPacket[]>(
+            "SELECT * FROM user WHERE email=?",
+            [email]
+        );
+        return rows as IUser[];
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
     }
 }
