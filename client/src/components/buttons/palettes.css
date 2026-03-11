@@ -1,0 +1,79 @@
+/* ========================= */
+/* Fond et texte selon thème */
+/* ========================= */
+
+/* Neon (dark) */
+:root[data-theme="neon"] {
+  --theme-bg: #000000;        /* fond noir pour faire ressortir le néon */
+  --theme-text: #FFFFFF;       /* texte blanc */
+  
+  /* Couleurs principales néon */
+  --primary-color: rgba(9, 195, 71, 0.85);  
+  --secondary-color: #9D00FF;
+  --tertiary-color: #14CB51;
+  
+  /* Gradient pour logo et boutons */
+  --gradient: linear-gradient(90deg, #39FF14, #14CB51, #9D00FF);
+  
+  /* Boutons */
+  --btn-bg: #39FF14;
+  --btn-color: #000000;
+  --btn-hover-bg: #9D00FF;
+}
+
+/* Cyber (dark) */
+:root[data-theme="cyber"] {
+  --theme-bg: #000000;
+  --theme-text: #FFFFFF;
+  --primary-color: #00FFFF;
+  --secondary-color: #FF00FF;
+  --gradient: linear-gradient(90deg, #00FFFF, #FF00FF);
+  --btn-bg: #00FFFF;
+  --btn-color: #000000;
+  --btn-hover-bg: #FF00FF;
+}
+
+/* Thèmes light : fond blanc, texte noir) */
+:root[data-theme="joie"],
+:root[data-theme="nuage"],
+:root[data-theme="triste"],
+:root[data-theme="vintage"] {
+  --theme-bg: #FFFFFF;
+  --theme-text: #111111;
+}
+
+:root[data-theme="joie"] {
+  --primary-color: #FFB347;
+  --secondary-color: #FF7F50;
+  --gradient: linear-gradient(90deg, #d68910, #ca4311);
+  --btn-bg: #FFB347;
+  --btn-color: #FFFFFF;
+  --btn-hover-bg: #FF7F50;
+}
+
+:root[data-theme="nuage"] {
+  --primary-color: #B8E0D2;
+  --secondary-color: #95B8D1;
+  --gradient: linear-gradient(90deg, #B8E0D2, #95B8D1, #EAC4D5);
+  --btn-bg: #B8E0D2;
+  --btn-color: #FFFFFF;
+  --btn-hover-bg: #EAC4D5;
+}
+
+:root[data-theme="triste"] {
+  --primary-color: #6A7C92;
+  --secondary-color: #43516C;
+  --gradient: linear-gradient(90deg, #6A7C92, #43516C);
+  --btn-bg: #6A7C92;
+  --btn-color: #FFFFFF;
+  --btn-hover-bg: #43516C;
+}
+
+:root[data-theme="vintage"] {
+  --primary-color: #9A879D;
+  --secondary-color: #7A3B69;
+  --gradient: linear-gradient(90deg, #9A879D, #7A3B69);
+  --btn-bg: #9A879D;
+  --btn-color: #FFFFFF;
+  --btn-hover-bg: #7A3B69;
+}

@@ -1,4 +1,11 @@
 
+form{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: column;
+}
+
 .input-group {
     margin: 20px 0;
     position: relative;
@@ -11,26 +18,42 @@
     left: 15px;
     font-size: 16px;
     pointer-events: none;
-    color: rgb(218, 223, 223);
+    color: var(--theme-text); /* texte adaptatif au thème */
     padding: 0 5px;
     transition: .3s;
+    background: var(--theme-bg); /* fond du label selon theme */
 }
 
 .input-group input {
     width: 360px;
     height: 60px;
-    color: #fff;
+    color: var(--theme-text); /* texte adaptatif */
     font-size: 16px;
     padding: 0 15px;
-    border: 1.2px solid rgb(220, 223, 223);
+    border: 1.2px solid var(--primary-color); /* couleur du theme */
     background: transparent;
     outline: none;
     border-radius: 5px;
 }
 
-.input-group input:focus~label,
-.input-group input:valid~label {
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
     top: 0;
-    background: #0d0d0d;
+    background: var(--theme-bg); /* label fond adaptatif */
     font-size: 14px;
+}
+
+/* Bouton adaptatif au theme */
+button[type="submit"] {
+    background: var(--btn-bg);
+    color: var(--btn-color);
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background: var(--btn-hover-bg);
 }

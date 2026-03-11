@@ -8,17 +8,49 @@
   align-items: center;
   padding: 1.5rem 2rem;
   transition: all 0.3s ease;
-  background: rgba(243, 237, 247, 0.6);
-  backdrop-filter: blur(12px);
+  background: rgba(243, 237, 247, 0.283);
+  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-.logo {
-  font-weight: 700;
-  font-size: 2rem;
-  transition: 0.3s;
+.logo span {
+  display: inline-block;
+  transition: transform 0.4s ease-out, letter-spacing 0.6s ease-out;
 }
 
+.logo:hover span,
+.logo:focus span {
+  transform: scale(1.4) translateY(-4px);
+  letter-spacing: 4px;
+}
+
+/* gradient permanent pour IZE */
+.logo span.gradient {
+  background: var(--gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* focus logo clavier / tactile */
+.logo:focus {
+  outline: none; /* pas de carré */
+}
+
+.logo-link {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+.logo-link:hover span,
+.logo-link:focus span {
+  transform: scale(1.4) translateY(-4px);
+  letter-spacing: 4px;
+}
+
+/* Nav */
 nav ul {
   list-style: none;
   display: flex;
@@ -27,7 +59,6 @@ nav ul {
   padding: 0;
 }
 
-/* état après scroll */
 .header--small {
   padding: 0.6rem 2rem;
 }
@@ -36,5 +67,61 @@ nav ul {
   font-size: 1.3rem;
 }
 
+/* liens */
+nav ul li a.nav-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--color-main);
+  font-weight: 500;
+  padding: 6px 0;
+  transition: transform 0.3s ease, color 0.3s ease;
+  outline: none; /* focus propre */
+}
 
+/* Coins décoratifs */
+nav ul li a.nav-link::before,
+nav ul li a.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border-image: var(--gradient) 1;
+  opacity: 0;
+  transform: scale(0.6) rotate(0deg);
+  transform-origin: center;
+  transition: 
+    transform 0.7s cubic-bezier(0.25,1,0.5,1),
+    opacity 0.4s ease;
+}
 
+/* Positions des coins */
+nav ul li a.nav-link::before {
+  top: -4px;
+  left: -4px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+nav ul li a.nav-link::after {
+  bottom: -4px;
+  right: -4px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+/* Hover / focus : apparition des coins et texte animé */
+nav ul li a.nav-link:hover::before,
+nav ul li a.nav-link:hover::after,
+nav ul li a.nav-link:focus::before,
+nav ul li a.nav-link:focus::after {
+  opacity: 1;
+  transform: scale(1) rotate(20deg);
+}
+
+nav ul li a.nav-link:hover,
+nav ul li a.nav-link:focus {
+  color: var(--color-link);
+  transform: translateY(-4px) scale(1.1);
+}

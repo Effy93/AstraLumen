@@ -1,37 +1,63 @@
-// ThemeToggle.jsx
 import { useEffect, useState } from "react";
-import { FaSun, FaMoon } from "react-icons/fa"; // Utilisation des icônes react-icons
+import "./palettes.css";
+import { FaSun, FaMoon, FaPalette, FaCloud, FaSmile, FaRobot } from "react-icons/fa";
+
+// Liste de tous les thèmes avec icône
+const themes = [
+  { name: "neon", icon: <FaSun /> },
+  { name: "vintage", icon: <FaPalette /> },
+  { name: "nuage", icon: <FaCloud /> },
+  { name: "triste", icon: <FaMoon /> },
+  { name: "joie", icon: <FaSmile /> },
+  { name: "cyber", icon: <FaRobot /> },
+];
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(() => {
-    // Valeur initiale depuis localStorage
-    return localStorage.getItem("theme") || "light";
+    return localStorage.getItem("theme") || "neon";
   });
 
-  // Synchronisation du thème sur le document
+  // Applique le thème sur le document
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Fonction pour switcher le thème
+  // Change vers le thème suivant
   const toggleTheme = () => {
-    setTheme(prev => (prev === "light" ? "dark" : "light"));
+    const currentIndex = themes.findIndex(t => t.name === theme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    setTheme(themes[nextIndex].name);
+  };
+
+  // Récupère l’icône correspondante
+  const renderIcon = () => {
+    const current = themes.find(t => t.name === theme);
+    return current?.icon || <FaPalette />;
   };
 
   return (
     <button
       onClick={toggleTheme}
       style={{
-        background: "none",
+        background: "var(--btn-bg)",
+        color: "var(--btn-color)",
         border: "none",
+        borderRadius: "6px",
+        padding: "0.4rem 0.8rem",
         cursor: "pointer",
         fontSize: "1.5rem",
-        color: "var(--text-color)",
+        display: "flex",
+        alignItems: "center",
+        gap: "0.5rem",
+        transition: "background 0.3s, color 0.3s",
       }}
+      onMouseEnter={e => e.currentTarget.style.background = "var(--btn-hover-bg)"}
+      onMouseLeave={e => e.currentTarget.style.background = "var(--btn-bg)"}
       aria-label="Toggle theme"
     >
-      {theme === "light" ? <FaMoon /> : <FaSun />}
+      {renderIcon()}
+      <span style={{ fontSize: "0.85rem", textTransform: "capitalize" }}>{theme}</span>
     </button>
   );
 }
