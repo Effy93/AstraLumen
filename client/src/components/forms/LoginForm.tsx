@@ -1,11 +1,6 @@
 import { useState } from "react";
 import './form.css';
-
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-}
+import type IUser from "../../types/IUser";
 
 interface FormProps {
   setUser: (user: IUser | null) => void;

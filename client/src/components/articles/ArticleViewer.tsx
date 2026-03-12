@@ -1,12 +1,7 @@
 import { useState} from "react";
 import useFetchArticle from "../hooks/useFetchArticle";
 import './article.css';
-
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-}
+import type IUser from "../../types/IUser";
 
 interface ArticleViewerProps {
   user: IUser | null;
