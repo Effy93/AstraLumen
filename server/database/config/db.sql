@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS astra_lumen;
+CREATE DATABASE astra_lumen;
 USE astra_lumen;
 
 CREATE TABLE stat_mood (
@@ -20,29 +20,29 @@ CREATE TABLE article (
     content TEXT NOT NULL,
     created_at BIGINT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE chrono_session (
-    id INT PRIMARY KEY  AUTO_INCREMENT NOT NULL,
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     timer_recorded INT NOT NULL,
     created_at BIGINT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE timer_session (
-    id  INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     timer_recorded INT NOT NULL,
     created_at BIGINT NOT NULL,
     user_id INT NOT NULL,
-    FOREIGN KEY(user_id) REFERENCES user(id)
+    FOREIGN KEY(user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_stat_mood (
     user_id INT,
     stat_id INT,
     PRIMARY KEY (user_id, stat_id),
-    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
     FOREIGN KEY (stat_id) REFERENCES stat_mood(id)
 );

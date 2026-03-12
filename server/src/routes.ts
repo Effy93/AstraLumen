@@ -7,8 +7,11 @@ import { verifyToken } from "./middlewares/verifyToken.ts";
 
 const router = Router();
 
+// Route privées avant routes publiques
+// ARTICLES 
+router.get("/articles/me", verifyToken, ArticleController.readOnePaginated);
 
-// ARTICLES
+// CRUD ARTICLES
 router.get("/articles", ArticleController.browse);
 router.get("/articles/:id", ArticleController.readOne);
 router.post("/articles", ArticleController.add);
