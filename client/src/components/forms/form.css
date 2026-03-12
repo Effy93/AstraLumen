@@ -57,3 +57,24 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background: var(--btn-hover-bg);
 }
+
+.login-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* au-dessus de tout */
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  background: transparent;
+  border: none;
+  color: var(--theme-text);
+  cursor: pointer;
+}

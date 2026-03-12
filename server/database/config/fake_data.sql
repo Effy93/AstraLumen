@@ -11,8 +11,8 @@ INSERT INTO user (name, email, password, created_at) VALUES
 -- ==========================
 INSERT INTO article (title, content, created_at, user_id) VALUES
 ('Mon premier article', 'Contenu du premier article...', 1677628800, 1),
-('Journal intime', 'Écrire mes pensées du jour...', 1677715200, 2),
-('Réflexion philosophique', 'Aujourd’hui je réfléchis sur...', 1677801600, 3),
+('Journal intime', 'Écrire mes pensées du jour...', 1677715200, 1),
+('Réflexion philosophique', 'Aujourd’hui je réfléchis sur...', 1677801600, 1),
 ('Deuxième article Alice', 'Alice écrit encore...', 1677888000, 1);
 
 -- ==========================

@@ -1,5 +1,5 @@
 // useFetchArticle.ts
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 interface IArticle {
   id: number;
@@ -10,43 +10,49 @@ interface IArticle {
 
 interface FetchArticleResult {
   article: IArticle | null;
-  message: string;
   loading: boolean;
-  totalPages: number; // ajouté ici
+  message: string;
+  totalPages: number;
 }
 
 export default function useFetchArticle(userId: number | null, page: number): FetchArticleResult {
-  const [state, setState] = useState<FetchArticleResult>({
-    article: null,
-    message: "",
-    loading: false,
-    totalPages: 1, // valeur par défaut
-  });
+  const [article, setArticle] = useState<IArticle | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    if (!userId) return;
+    if (userId === null) return; // n'exécute pas si pas d'utilisateur
 
     const fetchArticle = async () => {
-      setState({ article: null, message: "", loading: true, totalPages: 1 });
-
+      setLoading(true);
+      setMessage("");
       try {
-        const res = await fetch(`http://localhost:4001/articles/me?page=${page}`, {
+        const res = await fetch(`http://localhost:4001/api/articles/me?page=${page}`, {
           credentials: "include",
         });
 
-        if (!res.ok) throw new Error("Erreur récupération article");
-
-        const data: IArticle = await res.json();
-
-        // Ici totalPages = 1 par défaut (à modifier si backend renvoie le vrai total)
-        setState({ article: data, message: "", loading: false, totalPages: 1 });
-      } catch {
-        setState({ article: null, message: "Impossible de récupérer l'article", loading: false, totalPages: 1 });
+        if (!res.ok) {
+          const data = await res.json();
+          setMessage(data.message || "Impossible de récupérer l'article");
+          setArticle(null);
+        } else {
+          const data = await res.json();
+          setArticle(data);
+          // le back pourrait renvoyer un champ totalPages si tu veux
+          setTotalPages(1); // pour l'instant, fixe à 1
+        }
+      } catch (err) {
+        console.error(err);
+        setMessage("Erreur réseau");
+        setArticle(null);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchArticle();
   }, [userId, page]);
 
-  return state;
+  return { article, loading, message, totalPages };
 }

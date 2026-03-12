@@ -1,41 +1,50 @@
 import { useState } from "react";
 import './form.css';
 
-export default function Form() {
+interface IUser {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface FormProps {
+  setUser: (user: IUser | null) => void;
+}
+
+export default function LoginForm({ setUser }: FormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setMessage("");
 
     try {
-      const res = await fetch("http://localhost:4001/api/login", { // attention au /api
+      const res = await fetch("http://localhost:4001/api/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // pour que le cookie JWT soit stocké
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
-      // On lit la réponse même si ce n'est pas ok
       const data = await res.json();
 
-      console.log("Response status:", res.status);
-      console.log("Response body:", data);
-
       if (!res.ok) {
-        // Affiche le message exact renvoyé par le back
         setMessage(data.message || "Erreur de connexion");
+        setUser(null);
       } else {
         setMessage("Connexion réussie !");
-       //fonction pour récupérer /me ou rediriger
-        // fetch("http://localhost:4001/api/me", { credentials: "include" })...
+
+        // Récupérer les infos de l'utilisateur
+        const meRes = await fetch("http://localhost:4001/api/me", { credentials: "include" });
+        const meData = await meRes.json();
+        setUser(meData);
       }
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error(error);
       setMessage("Erreur réseau");
+      setUser(null);
     }
   };
 
@@ -53,6 +62,7 @@ export default function Form() {
           />
           <label htmlFor="email">Email</label>
         </div>
+
         <div className="input-group">
           <input
             type="password"
