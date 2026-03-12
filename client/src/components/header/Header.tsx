@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./header.css";
-
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,7 +23,7 @@ export default function Header() {
   return (
     <header className={`header ${scrolled ? "header--small" : ""}`}>
       <h1 className="logo">
-        <a href="/" className="logo-link">
+        <Link to="/" className="logo-link">
           {logoChars.map(({ char, key, isGradient }, index) => (
             <span
               key={key}
@@ -33,13 +33,13 @@ export default function Header() {
               {char}
             </span>
           ))}
-        </a>
+        </Link>
       </h1>
 
       <nav>
         <ul>
-          <li><a href="#about" className="nav-link">Chronos</a></li>
-          <li><a href="#contact" className="nav-link">Conexion</a></li>
+          <li><Link to="/" className="nav-link">Chronos</Link></li>
+          <li><Link to="/login" className="nav-link">Connexion</Link></li>
         </ul>
       </nav>
     </header>

@@ -2,28 +2,29 @@ import './App.css';
 import Header from './components/header/Header';
 import MoodButton from './components/buttons/MoodButton';
 import ArticleViewer from './components/articles/ArticleViewer';
-import LoginForm from './components/forms/LoginForm';
+import LoginPage from './pages/LoginPage';
 import { useState } from 'react';
-
-interface IUser {
-  id: number;
-  name: string;
-  email: string;
-}
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import type IUser from './types/IUser';
 
 function App() {
   const [user, setUser] = useState<IUser | null>(null);
 
   return (
-    <>
+    <Router>
       <Header />
-      {/* Wrapper principal qui laisse la place au header */}
       <main className="main-content">
-        <ArticleViewer user={user} />
-         <MoodButton />
-        <LoginForm setUser={setUser} />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <ArticleViewer user={user} />
+              <MoodButton />
+            </>
+          }/>
+          <Route path="/login" element={<LoginPage setUser={setUser} />} />
+        </Routes>
       </main>
-    </>
+    </Router>
   );
 }
 
