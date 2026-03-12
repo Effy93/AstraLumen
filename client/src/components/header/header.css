@@ -1,3 +1,4 @@
+/* ================= HEADER ================= */
 .header {
   position: fixed;
   top: 0;
@@ -7,58 +8,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  transition: all 0.3s ease;
-  background: rgba(243, 237, 247, 0.283);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(12px);
+  transition: padding 0.3s ease, backdrop-filter 0.3s ease, background 0.3s ease;
+  background: var(--header-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 100;
 }
 
-.logo span {
-  display: inline-block;
-  transition: transform 0.4s ease-out, letter-spacing 0.6s ease-out;
-}
-
-.logo:hover span,
-.logo:focus span {
-  transform: scale(1.4) translateY(-4px);
-  letter-spacing: 4px;
-}
-
-/* gradient permanent pour IZE */
-.logo span.gradient {
-  background: var(--gradient);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* focus logo clavier / tactile */
-.logo:focus {
-  outline: none; /* pas de carré */
-}
-
-.logo-link {
-  display: inline-block;
-  text-decoration: none;
-  color: inherit;
-  outline: none;
-}
-
-.logo-link:hover span,
-.logo-link:focus span {
-  transform: scale(1.4) translateY(-4px);
-  letter-spacing: 4px;
-}
-
-/* Nav */
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
+/* header compact */
 .header--small {
   padding: 0.6rem 2rem;
 }
@@ -67,22 +24,90 @@ nav ul {
   font-size: 1.3rem;
 }
 
-/* liens */
-nav ul li a.nav-link {
+/* ================= LOGO ================= */
+.logo span {
+  display: inline-block;
+  transition: transform var(--anim-medium) ease-out, letter-spacing var(--anim-slow) ease-out;
+}
+
+/* animation lettres au hover */
+.logo-link:hover span,
+.logo-link:focus span {
+  transform: scale(var(--logo-scale)) translateY(var(--logo-rise));
+  letter-spacing: 4px;
+}
+
+/* gradient et glow */
+.logo span.gradient {
+  background: var(--gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: var(--logo-glow);
+}
+
+/* lien logo */
+.logo-link {
   position: relative;
   display: inline-block;
   text-decoration: none;
-  color: var(--color-main);
-  font-weight: 500;
-  padding: 6px 0;
-  transition: transform 0.3s ease, color 0.3s ease;
-  outline: none; /* focus propre */
+  color: inherit;
+  outline: none;
 }
 
-/* Coins décoratifs */
+/* ================= LIGNE CYBER / NEON ================= */
+.logo-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: var(--gradient);
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.6s cubic-bezier(0.25,1,0.5,1);
+  opacity: 0;
+}
+
+/* activation seulement cyber et neon */
+:root[data-theme="cyber"] .logo-link::after,
+:root[data-theme="neon"] .logo-link::after {
+  opacity: 1;
+  box-shadow: var(--logo-glow);
+}
+
+/* animation underline */
+.logo-link:hover::after,
+.logo-link:focus::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ================= NAVIGATION ================= */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================= LIENS ================= */
+nav ul li a.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 6px 0;
+  text-decoration: none;
+  color: var(--color-main);
+  font-weight: 500;
+  transition: transform var(--anim-fast) ease, color var(--anim-fast) ease;
+  outline: none;
+}
+
+/* ================= COINS DÉCORATIFS ================= */
 nav ul li a.nav-link::before,
 nav ul li a.nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 12px;
   height: 12px;
@@ -91,12 +116,9 @@ nav ul li a.nav-link::after {
   opacity: 0;
   transform: scale(0.6) rotate(0deg);
   transform-origin: center;
-  transition: 
-    transform 0.7s cubic-bezier(0.25,1,0.5,1),
-    opacity 0.4s ease;
+  transition: transform 0.7s cubic-bezier(0.25,1,0.5,1), opacity 0.4s ease;
 }
 
-/* Positions des coins */
 nav ul li a.nav-link::before {
   top: -4px;
   left: -4px;
@@ -111,17 +133,17 @@ nav ul li a.nav-link::after {
   border-right: 2px solid;
 }
 
-/* Hover / focus : apparition des coins et texte animé */
+/* ================= HOVER / FOCUS ================= */
+nav ul li a.nav-link:hover,
+nav ul li a.nav-link:focus {
+  color: var(--color-link);
+  transform: translateY(var(--nav-lift)) scale(1.1);
+}
+
 nav ul li a.nav-link:hover::before,
 nav ul li a.nav-link:hover::after,
 nav ul li a.nav-link:focus::before,
 nav ul li a.nav-link:focus::after {
   opacity: 1;
   transform: scale(1) rotate(20deg);
-}
-
-nav ul li a.nav-link:hover,
-nav ul li a.nav-link:focus {
-  color: var(--color-link);
-  transform: translateY(-4px) scale(1.1);
 }

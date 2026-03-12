@@ -2,23 +2,32 @@
 /* Fond et texte selon thème */
 /* ========================= */
 
+/* HEADER THEME DARK  */
+:root[data-theme="neon"],
+:root[data-theme="cyber"],
+:root[data-theme="triste"] {
+  --header-bg: rgba(10,10,10,0.55);
+}
+
+/* HEADER THEME LIGHT */
+:root[data-theme="joie"],
+:root[data-theme="nuage"],
+:root[data-theme="vintage"] {
+  --header-bg: rgba(255,255,255,0.55);
+}
+
 /* Neon (dark) */
 :root[data-theme="neon"] {
   --theme-bg: #000000;        /* fond noir pour faire ressortir le néon */
   --theme-text: #FFFFFF;       /* texte blanc */
-  
-  /* Couleurs principales néon */
   --primary-color: rgba(9, 195, 71, 0.85);  
   --secondary-color: #9D00FF;
   --tertiary-color: #14CB51;
-  
-  /* Gradient pour logo et boutons */
   --gradient: linear-gradient(90deg, #39FF14, #14CB51, #9D00FF);
-  
-  /* Boutons */
   --btn-bg: #39FF14;
   --btn-color: #000000;
   --btn-hover-bg: #9D00FF;
+  --logo-glow: 0 0 3px rgba(57,255,20,0.6), 0 0 10px rgba(20,203,81,0.5);
 }
 
 /* Cyber (dark) */
@@ -31,6 +40,7 @@
   --btn-bg: #00FFFF;
   --btn-color: #000000;
   --btn-hover-bg: #FF00FF;
+  --logo-glow: 0 0 3px rgba(0,255,255,0.6), 0 0 10px rgba(255,0,255,0.5);
 }
 
 /* Thèmes light : fond blanc, texte noir) */
@@ -40,6 +50,7 @@
 :root[data-theme="vintage"] {
   --theme-bg: #FFFFFF;
   --theme-text: #111111;
+  --logo-glow: none;
 }
 
 :root[data-theme="joie"] {
@@ -61,13 +72,22 @@
 }
 
 :root[data-theme="triste"] {
-  --primary-color: #6A7C92;
-  --secondary-color: #43516C;
-  --gradient: linear-gradient(90deg, #6A7C92, #43516C);
-  --btn-bg: #6A7C92;
-  --btn-color: #FFFFFF;
-  --btn-hover-bg: #43516C;
+  /* Couleurs plus contrastées et vibrantes pour gris/violet */
+  --primary-color: #9CA7C0;      /* violet clair et lisible */
+  --secondary-color: #6B7A8F;    /* gris violet pour contraste */
+  --gradient: linear-gradient(90deg, #9CA7C0, #6B7A8F);
+
+  /* Boutons */
+  --btn-bg: #9CA7C0;
+  --btn-color: #1B1B1B;          /* texte sombre pour boutons */
+  --btn-hover-bg: #6B7A8F;
+
+  /* Fond du body */
+  --theme-bg: url('../../assets/img/sad-bg.jpg') no-repeat center center / cover;
+  /* Texte général */
+  --theme-text: #ECEFF4;          /* clair pour bien ressortir sur fond sombre */
 }
+
 
 :root[data-theme="vintage"] {
   --primary-color: #9A879D;
@@ -77,3 +97,4 @@
   --btn-color: #FFFFFF;
   --btn-hover-bg: #7A3B69;
 }
+
