@@ -1,7 +1,8 @@
-import { useState} from "react";
+import { useState } from "react";
 import useFetchArticle from "../hooks/useFetchArticle";
-import './article.css';
+import ArticleCard from "./ArticleCard";
 import type IUser from "../../types/IUser";
+import './article.css';
 
 interface ArticleViewerProps {
   user: IUser | null;
@@ -10,19 +11,12 @@ interface ArticleViewerProps {
 export default function ArticleViewer({ user }: ArticleViewerProps) {
   const [page, setPage] = useState(1);
 
-  // Hook pour récupérer l'article
   const { article, message, loading, totalPages } = useFetchArticle(user?.id ?? null, page);
 
   const nextPage = () => setPage(prev => (prev < (totalPages ?? 1) ? prev + 1 : prev));
   const prevPage = () => setPage(prev => (prev > 1 ? prev - 1 : 1));
 
   if (!user) return <p>Chargement de l'utilisateur...</p>;
-
-  // Formatage sécurisé de la date
-  const formatDate = (dateStr: string) => {
-    const parsed = Date.parse(dateStr);
-    return isNaN(parsed) ? "Date invalide" : new Date(parsed).toLocaleDateString();
-  };
 
   return (
     <div className="article-viewer-container">
@@ -32,15 +26,11 @@ export default function ArticleViewer({ user }: ArticleViewerProps) {
       {message && <p>{message}</p>}
 
       {article && (
-        <div className="article-card">
-          <div className="article-card-front">
-            <h3>{article.title}</h3>
-            <p>{article.content}</p>
-          </div>
-          <div className="article-card-back">
-            <p><small>Publié le : {formatDate(article.createdAt)}</small></p>
-          </div>
-        </div>
+        <ArticleCard
+          title={article.title}
+          content={article.content}
+          createdAt={article.createdAt}
+        />
       )}
 
       <div className="pagination">
