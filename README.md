@@ -18,29 +18,52 @@ L’architecture actuelle permet de séparer clairement les responsabilités : a
 ## 📂 Structure du projet
 
 ```
-server/
-├─ src/
-│   ├─ app.ts            # Point d'entrée, instance Express
-│   ├─ db.ts             # Connexion MySQL (pool)
-│   ├─ models/           # Interfaces / entités TS
-│   │    ├─ IArticle.ts
-│   │    ├─ IUser.ts
-│   │    ├─ ISession.ts
-│   │    └─ IStatMood.ts
-│   ├─ repositories/     # Accès BDD / CRUD
-│   │    ├─ ArticleRepository.ts
-│   │    └─ UserRepository.ts
-│   ├─ controllers/      # Gestion des requêtes HTTP et codes status
-│   │    └─ article.controller.ts
-│   │    └─ user.controller.ts
-│   │    └─ auth.controller.ts
-│   ├─ middlewares/      # 
-│   │    └─ verifyToken.ts
-│   └─ route.ts          # Endpoints Express
-├─ package.json
-├─ tsconfig.json
-└─ .env
+AstraLumen (Full Stack)
+│
+├─ server (API REST)
+│   ├─ src/
+│   │   ├─ app.ts             # Instance Express (point d'entrée)
+│   │   ├─ db.ts              # Connexion MySQL (pool)
+│   │   ├─ models/            # Types / interfaces TS
+│   │   │    ├─ IArticle.ts
+│   │   │    ├─ IUser.ts
+│   │   │    ├─ ISession.ts
+│   │   │    └─ IStatMood.ts
+│   │   ├─ repositories/      # CRUD + accès direct BDD
+│   │   │    ├─ ArticleRepository.ts
+│   │   │    └─ UserRepository.ts
+│   │   ├─ controllers/       # Gestion des requêtes HTTP
+│   │   │    ├─ article.controller.ts
+│   │   │    ├─ user.controller.ts
+│   │   │    └─ auth.controller.ts
+│   │   ├─ middlewares/       # Auth, JWT, validation
+│   │   │    └─ verifyToken.ts
+│   │   └─ route.ts           # Définition des endpoints
+│   └─ database/
+│       ├─ conception/        # UML : MCD, MLD, MPD, user cases
+│       └─ config/            # db.sql + fake_data.sql
+│
+├─ client (React)
+│   ├─ src/
+│   │   ├─ App.tsx            # Point d'entrée React
+│   │   ├─ index.tsx
+│   │   ├─ components/
+│   │   │    ├─ header/
+│   │   │    │    └─ Header.tsx        # Navbar dynamique 
+│   │   │    ├─ buttons/
+│   │   │    │    ├─ MoodButton.tsx    # Bouton qui change le thème
+│   │   │    │    └─ palettes.css      # Définition des thèmes
+│   │   │    ├─ forms/
+│   │   │    │    ├─ LoginForm.tsx     # Formulaire de connexion
+│   │   │    │    └─ form.css          
+│   │   │    └─ articles/
+│   │   │         ├─ ArticleViewer.tsx # Journal personnel
+│   │   │         └─ article.css       
+│   │   ├─ hooks/
+│   │   │    └─ useFetchArticle.ts    
+
 ```
+
 
 ---
 
@@ -48,18 +71,30 @@ server/
 
 ```bash
 git clone <repo-url>
+````
+
+### Backend
+```bash
 cd server
 npm install
 cp .env.example .env      # Ajouter tes variables d'environnement
 npm run dev               # Lancer le serveur en dev
 ```
 
+### Frontend
+```bash
+cd client
+npm install
+npm run dev               # Lancer React en dev
+```
+
+Pour le moment, le serveur et le frontend se lancent séparément. La configuration du build sera faite plus tard.
 ---
 
 ## 🚀 Lancer le serveur
 
 ```bash
-npm run dev       # Serveur en développement (nodemon)
+npm run dev       # Serveur en développement
 npm run build     # Compiler TypeScript
 npm start         # Lancer serveur compilé
 ```
