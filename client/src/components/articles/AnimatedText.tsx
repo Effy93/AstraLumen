@@ -1,42 +1,84 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 
 interface AnimatedTextProps {
   text: string;
-  speed?: number;      // ms par lettre
-  pause?: number;      // ms après chaque ligne
   style?: React.CSSProperties;
+  speed?: number; // ms par mot
 }
 
-export default function AnimatedText({
-  text,
-  speed = 50,
-  pause = 1500,
-  style,
-}: AnimatedTextProps) {
-  const [displayed, setDisplayed] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function AnimatedText({ text, style, speed = 150 }: AnimatedTextProps) {
+  const words = useMemo(() => text.split(/\s+/), [text]);
+  const [displayedCount, setDisplayedCount] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const intervalRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!text) return;
+    if (!isPlaying) return;
 
-    const interval = setInterval(() => {
-      setDisplayed(prev => {
-        const nextChar = text[currentIndex];
-        if (nextChar === undefined) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setDisplayed("");      // efface le texte après pause
-            setCurrentIndex(0);    // reset pour boucle
-          }, pause);
+    intervalRef.current = window.setInterval(() => {
+      setDisplayedCount(prev => {
+        if (prev >= words.length) {
+          clearInterval(intervalRef.current!);
+          setIsPlaying(false);
           return prev;
         }
-        setCurrentIndex(currentIndex + 1);
-        return prev + nextChar;
+        return prev + 1;
       });
     }, speed);
 
-    return () => clearInterval(interval);
-  }, [currentIndex, text, speed, pause]);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isPlaying, words, speed]);
 
-  return <div style={style}>{displayed}</div>;
+  const handlePlay = () => {
+    if (displayedCount >= words.length) setDisplayedCount(0);
+    setIsPlaying(true);
+  };
+
+  const handlePause = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setIsPlaying(false);
+  };
+
+  const handleReset = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setDisplayedCount(0);
+    setIsPlaying(false);
+  };
+
+  return (
+    <div
+      className="animated-text-container"
+      style={{
+        ...style,
+        minHeight: "6em",
+        overflow: "hidden",
+      }}
+    >
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.3rem" }}>
+        {words.slice(0, displayedCount).map((word, idx) => (
+          <span
+            key={idx}
+            className="animated-word"
+            style={{
+              transition: "opacity 0.4s ease, transform 0.4s ease",
+              transitionDelay: `${idx * 0.05}s`,
+              opacity: 1,
+              transform: "translateY(0)",
+            }}
+          >
+            {word}{" "}
+          </span>
+        ))}
+      </div>
+
+      <div style={{ marginTop: "1rem", display: "flex", gap: "1rem", justifyContent: "center" }}>
+        <button className="animated-text-button" onClick={handlePlay}>Play</button>
+        <button className="animated-text-button" onClick={handlePause}>Pause</button>
+        <button className="animated-text-button" onClick={handleReset}>Reset</button>
+      </div>
+    </div>
+  );
 }

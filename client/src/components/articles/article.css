@@ -4,13 +4,16 @@
   padding: 2rem;
   color: var(--theme-text);
   font-family: 'Georgia', serif;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
   background: rgba(0,0,0,0.45);
   backdrop-filter: blur(6px);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* Coins décoratifs : haut droit et bas gauche */
+/* Coins décoratifs */
 .article-card.themed::before,
 .article-card.themed::after {
   content: "";
@@ -21,38 +24,53 @@
 }
 
 .article-card.themed::before {
-  top: 0;
-  right: 0;
-  border-left: none;
-  border-bottom: none;
-  border-top-right-radius: 4px;
+  top:0; right:0; border-left:none; border-bottom:none; border-top-right-radius:4px;
 }
 
 .article-card.themed::after {
-  bottom: 0;
-  left: 0;
-  border-right: none;
-  border-top: none;
-  border-bottom-left-radius: 4px;
+  bottom:0; left:0; border-right:none; border-top:none; border-bottom-left-radius:4px;
 }
 
-/* Texte animé */
-.animated-text {
-  font-size: 2rem;
-  font-family: 'Georgia', serif;
-  color: var(--theme-text);
-  line-height: 2.5rem;
-  white-space: pre-line;      /* autorise retours à la ligne */
-  max-height: 6rem;           /* limite la hauteur visible */
-  overflow: hidden;
+/* AnimatedText */
+.animated-text-container {
+  padding: 1.5rem 2rem;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  margin-top: 1rem;
 }
 
-/* option si tu veux qu’une ligne reste visible */
-.animated-text span {
-  display: block;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+.animated-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: wordAppear 0.4s forwards ease-out;
 }
+
+@keyframes wordAppear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated-text-button {
+  cursor: pointer;
+  background: var(--gradient);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+.animated-text-button:hover {
+  transform: scale(1.05);
+}
+

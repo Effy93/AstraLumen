@@ -18,17 +18,16 @@ export default function ArticleCard({ title, content, createdAt }: ArticleCardPr
 
       <AnimatedText
         text={content}
-        speed={40}
-        pause={2000}
         style={{
-          fontSize: '1.5rem',
-          lineHeight: 2,
-          minHeight: '4rem',
-          color: 'var(--theme-text)',
+          fontSize: "1.5rem",
+          fontFamily: "Georgia, serif",
+          color: "rgba(255,255,255,0.85)",
         }}
       />
 
-      <p><small>Publié le : {formatDate(createdAt)}</small></p>
+      <p>
+        <small>Publié le : {formatDate(createdAt)}</small>
+      </p>
     </div>
   );
 }
