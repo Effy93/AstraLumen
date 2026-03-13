@@ -1,76 +1,74 @@
 .article-card.themed {
   position: relative;
-  margin-bottom: 2rem;
-  padding: 2rem;
-  color: var(--theme-text);
-  font-family: 'Georgia', serif;
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(6px);
+  margin: 2rem auto;
   max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Coins décoratifs */
-.article-card.themed::before,
-.article-card.themed::after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--gradient);
-}
-
-.article-card.themed::before {
-  top:0; right:0; border-left:none; border-bottom:none; border-top-right-radius:4px;
-}
-
-.article-card.themed::after {
-  bottom:0; left:0; border-right:none; border-top:none; border-bottom-left-radius:4px;
-}
-
-/* AnimatedText */
-.animated-text-container {
-  padding: 1.5rem 2rem;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 12px;
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(6px);
+  color: var(--theme-text);
+  font-family: var(--theme-text);
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1rem;
 }
-
+h3 {
+  margin: 1rem;
+  padding: 1rem;
+  font-size: 24px;
+}
+/* AnimatedText */
 .animated-word {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: wordAppear 0.4s forwards ease-out;
+  /* opacity: 0; */
+  color: var(--theme-text);
+  animation: wordFade 1.5s ease-out forwards;
+  margin-top: 0.4rem;
+  font-style: italic;
 }
 
-@keyframes wordAppear {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes wordFade {
+  0% { opacity: 0.1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 4; }
 }
 
 .animated-text-button {
   cursor: pointer;
   background: var(--gradient);
-  color: #fff;
+  color: var(--btn-color);
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .animated-text-button:hover {
   transform: scale(1.05);
+  background: var(--btn-hover-bg);
 }
 
+.article-viewer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--gradient);
+  color: var(--btn-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.pagination button:hover {
+  transform: scale(1.05);
+}

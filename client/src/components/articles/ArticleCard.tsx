@@ -15,16 +15,7 @@ export default function ArticleCard({ title, content, createdAt }: ArticleCardPr
   return (
     <div className="article-card themed">
       <h3>{title}</h3>
-
-      <AnimatedText
-        text={content}
-        style={{
-          fontSize: "1.5rem",
-          fontFamily: "Georgia, serif",
-          color: "rgba(255,255,255,0.85)",
-        }}
-      />
-
+      <AnimatedText text={content}/>
       <p>
         <small>Publié le : {formatDate(createdAt)}</small>
       </p>

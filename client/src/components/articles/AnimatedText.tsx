@@ -1,4 +1,5 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
+import { FaPlay, FaPause, FaRedo } from "react-icons/fa"; // FontAwesome
 
 interface AnimatedTextProps {
   text: string;
@@ -11,42 +12,46 @@ export default function AnimatedText({ text, style, speed = 150 }: AnimatedTextP
   const [displayedCount, setDisplayedCount] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const intervalRef = useRef<number | null>(null);
+  const frameRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number>(0);
 
-  useEffect(() => {
+  const animate = (time: number) => {
     if (!isPlaying) return;
 
-    intervalRef.current = window.setInterval(() => {
+    if (time - lastTimeRef.current > speed) {
       setDisplayedCount(prev => {
         if (prev >= words.length) {
-          clearInterval(intervalRef.current!);
           setIsPlaying(false);
           return prev;
         }
         return prev + 1;
       });
-    }, speed);
+      lastTimeRef.current = time;
+    }
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isPlaying, words, speed]);
+    frameRef.current = requestAnimationFrame(animate);
+  };
 
   const handlePlay = () => {
     if (displayedCount >= words.length) setDisplayedCount(0);
     setIsPlaying(true);
+    frameRef.current = requestAnimationFrame(animate);
   };
 
   const handlePause = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
     setIsPlaying(false);
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
   };
 
   const handleReset = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    setDisplayedCount(0);
     setIsPlaying(false);
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    setDisplayedCount(0);
   };
+
+  useEffect(() => () => {
+    if (frameRef.current) cancelAnimationFrame(frameRef.current);
+  }, []);
 
   return (
     <div
@@ -54,30 +59,27 @@ export default function AnimatedText({ text, style, speed = 150 }: AnimatedTextP
       style={{
         ...style,
         minHeight: "6em",
-        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        gap: "0.8rem",
+        textAlign: "center",
       }}
     >
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.3rem" }}>
+
+
+      {/* Texte animé */}
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.25rem" }}>
         {words.slice(0, displayedCount).map((word, idx) => (
-          <span
-            key={idx}
-            className="animated-word"
-            style={{
-              transition: "opacity 0.4s ease, transform 0.4s ease",
-              transitionDelay: `${idx * 0.05}s`,
-              opacity: 1,
-              transform: "translateY(0)",
-            }}
-          >
-            {word}{" "}
-          </span>
+          <span key={idx} className="animated-word">{word}</span>
         ))}
       </div>
-
-      <div style={{ marginTop: "1rem", display: "flex", gap: "1rem", justifyContent: "center" }}>
-        <button className="animated-text-button" onClick={handlePlay}>Play</button>
-        <button className="animated-text-button" onClick={handlePause}>Pause</button>
-        <button className="animated-text-button" onClick={handleReset}>Reset</button>
+      
+      <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+        <button className="animated-text-button" onClick={handlePlay}><FaPlay/></button>
+        <button className="animated-text-button" onClick={handlePause}><FaPause/></button>
+        <button className="animated-text-button" onClick={handleReset}><FaRedo/></button>
       </div>
     </div>
   );
