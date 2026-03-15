@@ -55,8 +55,8 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0);
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.047);
+  /* backdrop-filter: blur(2px); */
   pointer-events: none;
   z-index: -1;
 }

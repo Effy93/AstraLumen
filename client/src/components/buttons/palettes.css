@@ -2,24 +2,26 @@
 /* Fond et texte selon thème */
 /* ========================= */
 
-/* HEADER THEME DARK  */
+/* HEADER GLASSMORPHISM + THEME DARK  */
 :root[data-theme="neon"],
 :root[data-theme="cyber"],
+:root[data-theme="nuage"],
 :root[data-theme="triste"] {
-  --header-bg: rgba(10,10,10,0.55);
+  --header-bg: rgba(10, 10, 10, 0.182);
+  --theme-bg: #000000;       
+  --theme-text: #FFFFFF;   
 }
 
-/* HEADER THEME LIGHT */
+/* HEADER GLASSMORPHISM + THEME LIGHT */
 :root[data-theme="joie"],
-:root[data-theme="nuage"],
 :root[data-theme="vintage"] {
   --header-bg: rgba(255,255,255,0.55);
+  --theme-bg: #fff;       
+  --theme-text: #000;   
 }
 
 /* Neon (dark) */
 :root[data-theme="neon"] {
-  --theme-bg: #000000;        /* fond noir pour faire ressortir le néon */
-  --theme-text: #FFFFFF;       /* texte blanc */
   --primary-color: rgba(9, 195, 71, 0.85);  
   --secondary-color: #9D00FF;
   --tertiary-color: #14CB51;
@@ -32,8 +34,6 @@
 
 /* Cyber (dark) */
 :root[data-theme="cyber"] {
-  --theme-bg: #000000;
-  --theme-text: #FFFFFF;
   --primary-color: #00FFFF;
   --secondary-color: #FF00FF;
   --gradient: linear-gradient(90deg, #00FFFF, #FF00FF);
@@ -43,16 +43,30 @@
   --logo-glow: 0 0 3px rgba(0,255,255,0.6), 0 0 10px rgba(255,0,255,0.5);
 }
 
-/* Thèmes light : fond blanc, texte noir) */
-:root[data-theme="joie"],
-:root[data-theme="nuage"],
-:root[data-theme="triste"],
-:root[data-theme="vintage"] {
-  --theme-bg: #FFFFFF;
-  --theme-text: #111111;
-  --logo-glow: none;
+/* Nuage (dark + bg) */
+:root[data-theme="nuage"] {
+  --primary-color: #B8E0D2;
+  --secondary-color: #95B8D1;
+  --gradient: linear-gradient(90deg, #B8E0D2, #95B8D1, #EAC4D5);
+  --btn-bg: #B8E0D2;
+  --btn-color: #FFFFFF;
+  --btn-hover-bg: #EAC4D5;
+  --theme-bg: url('../../assets/img/nuage-bg.jpg') no-repeat center center / cover;
 }
 
+/* Triste (dark + bg) */
+:root[data-theme="triste"] {
+  --primary-color: #9CA7C0;  
+  --secondary-color: #6B7A8F;    
+  --gradient: linear-gradient(90deg, #9CA7C0, #6B7A8F);
+  /* Boutons */
+  --btn-bg: #9CA7C0;
+  --btn-color: #1B1B1B;          /* texte sombre pour boutons */
+  --btn-hover-bg: #6B7A8F;
+  --theme-bg: url('../../assets/img/sad-bg.jpg') no-repeat center center / cover; 
+}
+
+/* Joie (light) */
 :root[data-theme="joie"] {
   --primary-color: #FFB347;
   --secondary-color: #FF7F50;
@@ -61,34 +75,7 @@
   --btn-color: #FFFFFF;
   --btn-hover-bg: #FF7F50;
 }
-
-:root[data-theme="nuage"] {
-  --primary-color: #B8E0D2;
-  --secondary-color: #95B8D1;
-  --gradient: linear-gradient(90deg, #B8E0D2, #95B8D1, #EAC4D5);
-  --btn-bg: #B8E0D2;
-  --btn-color: #FFFFFF;
-  --btn-hover-bg: #EAC4D5;
-}
-
-:root[data-theme="triste"] {
-  /* Couleurs plus contrastées et vibrantes pour gris/violet */
-  --primary-color: #9CA7C0;      /* violet clair et lisible */
-  --secondary-color: #6B7A8F;    /* gris violet pour contraste */
-  --gradient: linear-gradient(90deg, #9CA7C0, #6B7A8F);
-
-  /* Boutons */
-  --btn-bg: #9CA7C0;
-  --btn-color: #1B1B1B;          /* texte sombre pour boutons */
-  --btn-hover-bg: #6B7A8F;
-
-  /* Fond du body */
-  --theme-bg: url('../../assets/img/sad-bg.jpg') no-repeat center center / cover;
-  /* Texte général */
-  --theme-text: #ECEFF4;          /* clair pour bien ressortir sur fond sombre */
-}
-
-
+/* Vintage (light)  */
 :root[data-theme="vintage"] {
   --primary-color: #9A879D;
   --secondary-color: #7A3B69;
