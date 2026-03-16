@@ -2,7 +2,6 @@
 form{
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     flex-direction: column;
 }
 
@@ -21,7 +20,8 @@ form{
     color: var(--theme-text); /* texte adaptatif au thème */
     padding: 0 5px;
     transition: .3s;
-    background: var(--theme-bg); /* fond du label selon theme */
+    background: var(--theme-bg); 
+    
 }
 
 .input-group input {
@@ -31,9 +31,18 @@ form{
     font-size: 16px;
     padding: 0 15px;
     border: 1.2px solid var(--primary-color); /* couleur du theme */
-    background: transparent;
+    /* background: transparent; */
     outline: none;
     border-radius: 5px;
+}
+
+:root[data-theme="triste"],
+:root[data-theme="nuage"],
+:root[data-theme="neon"],
+:root[data-theme="cyber"] { 
+    .input-group input {
+        background: transparent;
+    }
 }
 
 .input-group input:focus ~ label,
