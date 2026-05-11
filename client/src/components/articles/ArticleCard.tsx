@@ -8,8 +8,19 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ title, content, createdAt }: ArticleCardProps) {
   const formatDate = (dateStr: string) => {
-    const parsed = Date.parse(dateStr);
-    return isNaN(parsed) ? "Date invalide" : new Date(parsed).toLocaleDateString();
+    try {
+      const date = new Date(dateStr);
+      if (isNaN(date.getTime())) {
+        return "Date invalide";
+      }
+      return date.toLocaleDateString('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    } catch {
+      return "Date invalide";
+    }
   };
 
   return (
