@@ -14,7 +14,7 @@ router.get("/articles/me", verifyToken, ArticleController.readOnePaginated);
 // CRUD ARTICLES
 router.get("/articles", ArticleController.browse);
 router.get("/articles/:id", ArticleController.readOne);
-router.post("/articles", ArticleController.add);
+router.post("/articles", verifyToken, ArticleController.add);
 router.patch("/articles/:id", ArticleController.modify);
 router.delete("/articles/:id", ArticleController.remove);
 

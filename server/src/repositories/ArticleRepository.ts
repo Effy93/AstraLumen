@@ -26,10 +26,10 @@ export class ArticleRepository {
   }
 
   // Créer un article
-  async create(article: Omit<IArticle, "id">): Promise<number> {
-    const { title, content, createdAt, userId } = article;
-    const [result] = await db.query<ResultSetHeader>("INSERT INTO article (title, content, created_at, user_id) VALUES (?, ?, ?, ?)",
-      [title, content, createdAt, userId]
+  async create(article: Omit<IArticle, "id" | "createdAt">): Promise<number> {
+    const { title, content, userId } = article;
+    const [result] = await db.query<ResultSetHeader>("INSERT INTO article (title, content, user_id) VALUES (?, ?, ?)",
+      [title, content, userId]
     );
     return result.insertId;
   }

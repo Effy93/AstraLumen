@@ -73,7 +73,10 @@ async readOnePaginated(req: AuthRequest, res: Response): Promise<void> {
   async add(req: AuthRequest, res: Response): Promise<void> {
     try {
       const userId = req.user?.id;
-      if (!userId)  res.status(401).json({ message: "Non autorisé" });
+      if (!userId) {
+        res.status(401).json({ message: "Non autorisé" });
+        return;
+      }
 
       const article: Omit<IArticle, "id"> = { ...req.body, userId };
       const insertId = await articleRepo.create(article);
