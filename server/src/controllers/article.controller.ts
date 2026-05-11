@@ -55,14 +55,14 @@ async readOnePaginated(req: AuthRequest, res: Response): Promise<void> {
     }
 
     // Appel du repo
-    const article = await articleRepo.readByUserPaginated(userId, page, 1);
+    const { article, totalPages } = await articleRepo.readByUserPaginated(userId, page, 1);
 
     if (!article) {
-      res.status(404).json({ message: "Aucun article trouvé pour cette page" });
+      res.status(404).json({ message: "Aucun article trouvé pour cette page", totalPages });
       return;
     }
 
-    res.json(article);
+    res.json({ article, totalPages });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

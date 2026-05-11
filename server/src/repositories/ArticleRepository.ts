@@ -16,13 +16,25 @@ export class ArticleRepository {
   }
 
   // Pagination : 1 article par page pour un utilisateur donné
-  async readByUserPaginated(userId: number, page = 1, limit = 1): Promise<IArticle | null> {
+  async readByUserPaginated(userId: number, page = 1, limit = 1): Promise<{ article: IArticle | null; totalPages: number }> {
     const offset = (page - 1) * limit;
+    
+    // Récupérer le nombre total d'articles
+    const [countRows] = await db.query<RowDataPacket[]>(
+      "SELECT COUNT(*) as total FROM article WHERE user_id = ?",
+      [userId]
+    );
+    const totalArticles = (countRows as any[])[0]?.total || 0;
+    const totalPages = Math.ceil(totalArticles / limit);
+    
+    // Récupérer l'article de la page
     const [rows] = await db.query<RowDataPacket[]>(
       "SELECT * FROM article WHERE user_id = ? ORDER BY created_at DESC LIMIT ? OFFSET ?",
       [userId, limit, offset]
     );
-    return (rows as IArticle[])[0] || null;
+    const article = (rows as IArticle[])[0] || null;
+    
+    return { article, totalPages };
   }
 
   // Créer un article

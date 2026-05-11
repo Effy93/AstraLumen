@@ -38,9 +38,8 @@ export default function useFetchArticle(userId: number | null, page: number): Fe
           setArticle(null);
         } else {
           const data = await res.json();
-          setArticle(data);
-          // le back pourrait renvoyer un champ totalPages si tu veux
-          setTotalPages(1); // pour l'instant, fixe à 1
+          setArticle(data.article);
+          setTotalPages(data.totalPages || 1);
         }
       } catch (err) {
         console.error(err);
