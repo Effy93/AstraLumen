@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import router from "./routes.ts";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { printDatabaseInfo } from "./db.ts";
+import { printDBInfo } from "./services/printDBinfo.ts";
 
 dotenv.config();
 
@@ -34,5 +34,5 @@ app.use("/api", router);
 
 app.listen(PORT, () => {
   console.log(`Serveur express tourne sur : http://localhost:${PORT}`);
-  printDatabaseInfo();
+  printDBInfo();
 });
