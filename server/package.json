@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "ts-node src/app.ts",
-    "build": "tsc",
+    "dev": "tsx src/app.ts",
+    "build": "tsc --noEmit",
     "start": "node dist/app.js",
     "test": "jest --runInBand --verbose",
     "test:watch": "jest --watch",
