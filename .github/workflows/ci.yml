@@ -32,14 +32,18 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
+          cache-dependency-path: server/package-lock.json
 
       - name: Install dependencies
+        working-directory: server
         run: npm ci
 
       - name: Build server
-        run: npm run build -w server
+        working-directory: server
+        run: npm run build
 
       - name: Run tests
+        working-directory: server
         env:
           DB_HOST: localhost
           DB_PORT: 3306
@@ -47,4 +51,4 @@ jobs:
           DB_PASSWORD: root
           DB_NAME: astralumen_test
           SECRET_KEY: test
-        run: npm run test -w server
+        run: npm test
