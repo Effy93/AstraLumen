@@ -1,4 +1,4 @@
-name: AstraLumen CI
+name: AstraLumen Backend CI
 
 on:
   push:
@@ -23,7 +23,6 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-
     steps:
       - uses: actions/checkout@v4
 
@@ -38,7 +37,10 @@ jobs:
         working-directory: server
         run: npm ci
 
-      - name: Build server
+      - name: Wait for MySQL
+        run: sleep 10
+
+      - name: Build TypeScript
         working-directory: server
         run: npm run build
 
