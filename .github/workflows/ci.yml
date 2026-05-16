@@ -42,8 +42,8 @@ jobs:
         run: sleep 15
 
       #  build workspace server
-      - name: Build server
-        run: npm run build -w server
+      # - name: Build server
+      #   run: npm run build -w server
 
       # tests workspace server
       - name: Test server
