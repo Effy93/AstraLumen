@@ -1,5 +1,5 @@
 import type { RowDataPacket } from "mysql2/promise";
-import { db } from "../db";
+import { db } from "../src/db";
 
 const DB_CONFIG = {
   previewLimit: 5,
@@ -55,7 +55,8 @@ const queryPreview = async (table: string) => {
       `SELECT * FROM \`${table}\` LIMIT ${DB_CONFIG.previewLimit}`,
     );
     return rows;
-  } catch {
+  } catch (err) {
+    console.error("queryPreview error:", err);
     return [];
   }
 };
@@ -67,11 +68,12 @@ const getTables = async () => {
 
 /**
  * =========================
- * 📊 MAIN DASHBOARD
+ * 📊 MAIN FUNCTION
  * =========================
  */
 export async function printDBInfo() {
   try {
+    // test connexion
     await db.query("SELECT 1");
 
     console.log(`${color.green}🟢 MySQL connecté${color.reset}`);
@@ -79,7 +81,6 @@ export async function printDBInfo() {
     // =========================
     // 📁 DB NAME
     // =========================
-
     const [dbRows] = await db.query<RowDataPacket[]>(
       "SELECT DATABASE() AS db",
     );
@@ -91,7 +92,6 @@ export async function printDBInfo() {
     // =========================
     // 👤 USER + HOST + PORT
     // =========================
-
     const [userRows] = await db.query<RowDataPacket[]>(
       "SELECT USER() AS user",
     );
@@ -112,7 +112,6 @@ export async function printDBInfo() {
     // =========================
     // 📦 TABLES
     // =========================
-
     const tables = await getTables();
 
     console.log(
@@ -122,10 +121,8 @@ export async function printDBInfo() {
     // =========================
     // 🔥 DISPLAY TABLES
     // =========================
-
     for (const table of tables) {
       const rows = await queryPreview(table);
-
       const iconTable = getIcon(table);
 
       const labelColor =
@@ -135,9 +132,7 @@ export async function printDBInfo() {
           ? color.purple
           : color.blue;
 
-      console.log(
-        `${labelColor}${iconTable} ${table}${color.reset}`,
-      );
+      console.log(`${labelColor}${iconTable} ${table}${color.reset}`);
 
       if (rows.length) {
         console.table(sanitizeRows(rows));
@@ -149,3 +144,9 @@ export async function printDBInfo() {
     console.error(`${color.red}❌ DB error${color.reset}`, err);
   }
 }
+
+async function main() {
+  await printDBInfo();
+}
+
+main();
