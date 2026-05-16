@@ -1,5 +1,5 @@
 import type { RowDataPacket } from "mysql2/promise";
-import { db } from "../db.ts";
+import { db } from "../db";
 
 const DB_CONFIG = {
   previewLimit: 5,

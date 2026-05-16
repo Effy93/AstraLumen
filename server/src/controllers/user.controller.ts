@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import UserRepository from "../repositories/UserRepository.ts";
-import type IUser from "../models/IUser.ts";
+import UserRepository from "../repositories/UserRepository";
+import type IUser from "../models/IUser";
 
 export default class UserController {
     static async create(req: Request, res: Response) {

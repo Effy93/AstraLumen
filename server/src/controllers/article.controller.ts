@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import { ArticleRepository } from "../repositories/ArticleRepository.ts";
-import type { AuthRequest } from "../middlewares/verifyToken.ts";
-import type { IArticle } from "../models/IArticle.ts";
+import { ArticleRepository } from "../repositories/ArticleRepository";
+import type { AuthRequest } from "../middlewares/verifyToken";
+import type { IArticle } from "../models/IArticle";
 
 const articleRepo = new ArticleRepository();
 

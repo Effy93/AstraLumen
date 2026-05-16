@@ -1,6 +1,6 @@
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
-import { db } from "../db.ts";
-import type { IArticle } from "../models/IArticle.ts";
+import { db } from "../db";
+import type { IArticle } from "../models/IArticle";
 
 export class ArticleRepository {
   // Convertir le createdAt en ISO en tenant compte des différents formats possibles

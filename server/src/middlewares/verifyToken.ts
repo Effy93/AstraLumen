@@ -2,8 +2,8 @@ import dotenv from "dotenv";
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-import UserRepository from "../repositories/UserRepository.ts";
-import type  IUser  from "../models/IUser.ts";
+import UserRepository from "../repositories/UserRepository";
+import type  IUser  from "../models/IUser";
 
 dotenv.config();
 

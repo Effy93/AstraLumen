@@ -1,5 +1,5 @@
-import { db } from "../db.ts";
-import type  IUser from "../models/IUser.ts";
+import { db } from "../db";
+import type  IUser from "../models/IUser";
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 
 export default class UserRepository {

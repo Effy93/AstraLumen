@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
-import type { AuthRequest } from "../middlewares/verifyToken.ts";
-import UserRepository from "../repositories/UserRepository.ts";
+import type { AuthRequest } from "../middlewares/verifyToken";
+import UserRepository from "../repositories/UserRepository";
 
 dotenv.config();
 
