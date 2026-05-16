@@ -1,6 +1,16 @@
 module.exports = {
-  preset: "ts-jest",
+  preset: "ts-jest/presets/default-esm",
   testEnvironment: "node",
-  testMatch: ["**/*.test.ts"],
-  clearMocks: true
+
+  extensionsToTreatAsEsm: [".ts"],
+
+  globals: {
+    "ts-jest": {
+      useESM: true
+    }
+  },
+
+  transform: {
+    "^.+\\.ts$": ["ts-jest", { useESM: true }]
+  }
 };
