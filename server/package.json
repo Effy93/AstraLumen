@@ -6,7 +6,7 @@
     "dev": "ts-node src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --verbose --coverage",
     "test:watch": "jest --watch"
   },
   "dependencies": {

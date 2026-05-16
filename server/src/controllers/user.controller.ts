@@ -9,7 +9,7 @@ export default class UserController {
             const {name, password, email, createdAt} = req.body;
             // verifier si le corps de le requete (req.body) nest pas vide
             if(!name || !email || !password) {
-                console.log("Champs manquants")
+              
                 return res.status(404).json()
             }
 

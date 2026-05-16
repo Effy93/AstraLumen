@@ -3,8 +3,8 @@ import express from "express";
 import authController from "../../controllers/auth.controller";
 import UserRepository from "../../repositories/UserRepository";
 import bcrypt from "bcrypt";
-import { jest } from "@jest/globals";
 
+// Mock du repository pour éviter la vraie DB
 jest.mock("../../repositories/UserRepository");
 
 const app = express();
@@ -14,30 +14,78 @@ app.post("/login", authController.login);
 describe("Auth security", () => {
 
   afterEach(() => {
+    // CLEAN : reset des mocks après chaque test
     jest.clearAllMocks();
   });
 
-  test("login fails if user does not exist", async () => {
-    (UserRepository.getUserByEmail as jest.Mock).mockResolvedValue([]);
+  /**
+   * TEST 1
+   * Cas : utilisateur inexistant
+   */
+  test("should return 401 when user does not exist", async () => {
 
-    const res = await request(app).post("/login").send({
+    // ======================
+    // ARRANGE (préparation)
+    // ======================
+    const mockedGetUserByEmail = jest.mocked(UserRepository.getUserByEmail);
+    mockedGetUserByEmail.mockResolvedValue([]);
+
+    const payload = {
       email: "unknown@test.com",
       password: "123"
-    });
+    };
 
+    // ======================
+    // ACT (exécution)
+    // ======================
+    const res = await request(app)
+      .post("/login")
+      .send(payload);
+
+    // ======================
+    // ASSERT (vérification)
+    // ======================
     expect(res.status).toBe(401);
   });
 
-  test("login fails with wrong password", async () => {
-    (UserRepository.getUserByEmail as jest.Mock).mockResolvedValue([
-      { id:1, email:"eva@test.com", password: await bcrypt.hash("real",10) }
+  /**
+   * TEST 2
+   * Cas : mauvais mot de passe
+   */
+  test("should return 401 when password is incorrect", async () => {
+
+    // ======================
+    // ARRANGE (préparation)
+    // ======================
+    const mockedGetUserByEmail = jest.mocked(UserRepository.getUserByEmail);
+
+    const hashedPassword = await bcrypt.hash("real", 10);
+
+    mockedGetUserByEmail.mockResolvedValue([
+      {
+        id: 1,
+        email: "eva@test.com",
+        password: hashedPassword,
+        name: "eva",
+        createdAt: Date.now()
+      } as any
     ]);
 
-    const res = await request(app).post("/login").send({
+    const payload = {
       email: "eva@test.com",
       password: "wrong"
-    });
+    };
 
+    // ======================
+    // ACT (exécution)
+    // ======================
+    const res = await request(app)
+      .post("/login")
+      .send(payload);
+
+    // ======================
+    // ASSERT (vérification)
+    // ======================
     expect(res.status).toBe(401);
   });
 

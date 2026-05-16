@@ -9,7 +9,7 @@ export default class UserRepository {
             const row = await db.query<ResultSetHeader>("INSERT INTO user (name, email, password, created_at) VALUES(?,?,?,?) ",
             [user.name, user.email, user.password, user.createdAt]
         );
-            return row
+            return row[0].insertId
         } catch (error)
         {
             return error

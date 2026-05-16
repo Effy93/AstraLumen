@@ -1,4 +1,5 @@
 # AstraLumen 
+![Coverage](https://img.shields.io/badge/coverage-jest-yellow)
 
 ## 💡 À propos d’AstraLumen
 
