@@ -24,10 +24,6 @@ jobs:
           --health-timeout=5s
           --health-retries=3
 
-    defaults:
-      run:
-        working-directory: server
-
     steps:
       - uses: actions/checkout@v4
 
@@ -36,17 +32,21 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
+          cache-dependency-path: server/package-lock.json
 
       - name: Install dependencies
+        working-directory: server
         run: npm ci
-        
+
       - name: Wait for MySQL
         run: sleep 10
 
       - name: Build TypeScript
+        working-directory: server
         run: npm run build
 
       - name: Run tests
+        working-directory: server
         env:
           DB_HOST: localhost
           DB_PORT: 3306
