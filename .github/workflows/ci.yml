@@ -18,6 +18,11 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: astralumen_test
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - uses: actions/checkout@v4
@@ -26,19 +31,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
-          cache-dependency-path: server/package-lock.json
+          cache: npm
 
-      - name: Install dependencies
-        working-directory: server
+      # INSTALL A LA RACINE (important pour workspaces)
+      - name: Install dependencies (monorepo)
         run: npm ci
 
-      - name: Build
-        working-directory: server
-        run: npm run build
+    
+      - name: Wait for MySQL
+        run: sleep 15
 
-      - name: Test
-        working-directory: server
+      #  build workspace server
+      - name: Build server
+        run: npm run build -w server
+
+      # tests workspace server
+      - name: Test server
         env:
           DB_HOST: localhost
           DB_PORT: 3306
@@ -46,4 +54,4 @@ jobs:
           DB_PASSWORD: root
           DB_NAME: astralumen_test
           SECRET_KEY: test
-        run: npm test
+        run: npm run test -w server
