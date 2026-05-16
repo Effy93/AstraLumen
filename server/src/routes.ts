@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import ArticleController from "./controllers/article.controller.ts";
-import UserController  from "./controllers/user.controller.ts";
-import AuthController from "./controllers/auth.controller.ts";
-import { verifyToken } from "./middlewares/verifyToken.ts";
+import ArticleController from "./controllers/article.controller";
+import UserController  from "./controllers/user.controller";
+import AuthController from "./controllers/auth.controller";
+import { verifyToken } from "./middlewares/verifyToken";
 
 const router = Router();
 

@@ -6,7 +6,7 @@
     "dev": "ts-node src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
-    "test": "jest --runInBand --verbose --coverage",
+    "test": "jest --runInBand --verbose",
     "test:watch": "jest --watch",
     "db:info": "tsx tools/printDBinfo.tsx"
   },
