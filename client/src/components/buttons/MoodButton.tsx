@@ -39,21 +39,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      style={{
-        background: "var(--btn-bg)",
-        color: "var(--btn-color)",
-        border: "none",
-        borderRadius: "6px",
-        padding: "0.4rem 0.8rem",
-        cursor: "pointer",
-        fontSize: "1.5rem",
-        display: "flex",
-        alignItems: "center",
-        gap: "0.5rem",
-        transition: "background 0.3s, color 0.3s",
-      }}
-      onMouseEnter={e => e.currentTarget.style.background = "var(--btn-hover-bg)"}
-      onMouseLeave={e => e.currentTarget.style.background = "var(--btn-bg)"}
+      className="mood-button"
       aria-label="Toggle theme"
     >
       {renderIcon()}

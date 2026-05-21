@@ -118,3 +118,73 @@
   --btn-color: #FFFFFF;
   --btn-hover-bg: #7A3B69;
 }
+
+
+/* ========================= */
+/* MOOD BUTTON */
+/* ========================= */
+
+.mood-button {
+  position: relative;
+  background: var(--btn-bg);
+  color: var(--btn-color);
+  border: none;
+  border-radius: 50px;
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  overflow: visible;
+}
+
+.mood-button::before,
+.mood-button::after,
+.mood-button span::before,
+.mood-button span::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  bottom: -5px;
+  background: var(--btn-bg);
+  transition: all 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mood-button::before  { left: 15%; }
+.mood-button::after   { left: 35%; }
+.mood-button span::before { left: 65%; }
+.mood-button span::after  { left: 85%; }
+
+.mood-button:hover {
+  box-shadow: 0 5px 15px color-mix(in srgb, var(--btn-bg) 40%, transparent);
+  transform: translateY(-2px);
+  background: var(--btn-hover-bg);
+}
+
+.mood-button:hover::before,
+.mood-button:hover::after,
+.mood-button:hover span::before,
+.mood-button:hover span::after {
+  opacity: 1;
+}
+
+.mood-button:hover::before      { animation: mood-float-dot 2s infinite ease-in-out; }
+.mood-button:hover::after        { animation: mood-float-dot 2s infinite 0.3s ease-in-out; }
+.mood-button:hover span::before  { animation: mood-float-dot 2s infinite 0.6s ease-in-out; }
+.mood-button:hover span::after   { animation: mood-float-dot 2s infinite 0.9s ease-in-out; }
+
+@keyframes mood-float-dot {
+  0%   { transform: translateY(0)    scale(1);   opacity: 0.7; }
+  50%  { transform: translateY(-20px) scale(1.2); opacity: 0.3; }
+  100% { transform: translateY(-40px) scale(0.8); opacity: 0;   }
+}
+
+.mood-button:active {
+  transform: translateY(0);
+}
